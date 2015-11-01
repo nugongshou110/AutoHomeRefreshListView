@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+   >
+
+    <SeekBar
+        android:id="@+id/seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        
+        />
+    <com.example.autohomerefreshlistview.AutoHome
+        android:id="@+id/autohome"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        
+        />
+
+</LinearLayout>
