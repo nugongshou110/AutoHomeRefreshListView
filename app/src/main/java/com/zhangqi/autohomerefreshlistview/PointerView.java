@@ -36,15 +36,13 @@ public class PointerView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(measureWidth(widthMeasureSpec),measureWidth(heightMeasureSpec));
-        x = getMeasuredWidth();
-        y = getMeasuredHeight();
-        finalPointerBitmap = Bitmap.createScaledBitmap(pointerBitmap, x, y, true);
+        setMeasuredDimension(measureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
     }
-    private int measureWidth(int widMeasureSpec){
+
+    private int measureWidth(int widthMeasureSpec){
         int result = 0;
-        int size = MeasureSpec.getSize(widMeasureSpec);
-        int mode = MeasureSpec.getMode(widMeasureSpec);
+        int size = MeasureSpec.getSize(widthMeasureSpec);
+        int mode = MeasureSpec.getMode(widthMeasureSpec);
         if (mode == MeasureSpec.EXACTLY){
             result = size;
         }else{
@@ -54,6 +52,28 @@ public class PointerView extends View {
             }
         }
         return result;
+    }
+    private int measureHeight(int heightMeasureSpec){
+        int result = 0;
+        int size = MeasureSpec.getSize(heightMeasureSpec);
+        int mode = MeasureSpec.getMode(heightMeasureSpec);
+        if (mode == MeasureSpec.EXACTLY){
+            result = size;
+        }else{
+            result = pointerBitmap.getHeight();
+            if (mode == MeasureSpec.AT_MOST){
+                result = Math.min(result,size);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        x = w;
+        y = h;
+        finalPointerBitmap = Bitmap.createScaledBitmap(pointerBitmap, x, y, true);
     }
 
     @Override
