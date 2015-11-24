@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.ArrayAdapter;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,20 +20,26 @@ public class PullToFreshActivity extends Activity implements AutoHomeListView.On
     private final static int REFRESH_COMPLETE = 0;
     private List<String> mDatas;
 
-    private InterHandler mInterHandler = new InterHandler();
+    private InterHandler mInterHandler = new InterHandler(this);
 
-    private static class InterHandler extends Handler {
+    private static class InterHandler extends Handler{
+        private WeakReference<PullToFreshActivity> mActivity;
+        public InterHandler(PullToFreshActivity activity){
+            mActivity = new WeakReference<PullToFreshActivity>(activity);
+        }
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case REFRESH_COMPLETE:
-                    mListView.setOnRefreshComplete();
-                    mAdapter.notifyDataSetChanged();
-                    mListView.setSelection(0);
-                    break;
-
-                default:
-                    break;
+            PullToFreshActivity activity = mActivity.get();
+            if (activity != null) {
+                switch (msg.what) {
+                    case REFRESH_COMPLETE:
+                        activity.mListView.setOnRefreshComplete();
+                        activity.mAdapter.notifyDataSetChanged();
+                        activity.mListView.setSelection(0);
+                        break;
+                }
+            }else{
+                super.handleMessage(msg);
             }
         }
     }
