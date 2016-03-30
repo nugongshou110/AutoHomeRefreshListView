@@ -10,7 +10,6 @@ public class MainActivity extends Activity {
   private SeekBar mSeekBar;
   private AutoHome mAutoHome;
   private float mCurrentProgress;
-  private PointerView mPointerView;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
